@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<!-- XML 헤더 -->
+<sqlMapConfig>
+	<!-- 트랜잭션 관리 및 sqlMapClient 상세 제어 -->
+	<settings enhancementEnabled="true" useStatementNamespaces="true" />
+	
+	<!-- sqlMapConfig에 의해 로드되는 모든 SQL Map 파일을 가져온다 -->
+	<sqlMap resource="spring/board/dao/board.xml" />
+</sqlMapConfig>

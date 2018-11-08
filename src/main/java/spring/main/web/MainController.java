@@ -1,4 +1,4 @@
-package board.main.web;
+package spring.main.web;
 
 import javax.servlet.http.HttpServletRequest;
 

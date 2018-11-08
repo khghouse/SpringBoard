@@ -9,14 +9,14 @@
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<!-- board안의 클래스들을 스캔하고, 빈 인스턴스를 생성해준다. -->
-	<context:component-scan base-package="board">
+	<context:component-scan base-package="spring">
 		<!--
 			include-filter : 클래스를 스캔할 때 포함시킨다?
 			exclude-filter : 클래스를 스캔할 때 포함시키지 않는다?
 		-->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
 	
 	<!-- ViewResolver -->
