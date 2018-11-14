@@ -38,4 +38,21 @@
  
  - 데이터소스, iBatis 세팅
  
+2018-11-14 게시판 글쓰기 기능 일부 구현
+
+ - HashMap -> ParamMap, RSMap로 대체
+  = 둘 다 HashMap을 상속받은 클래스
+ 
+ - BoardController 리팩토링
+ - 글 등록 버튼 게시판 유형에 따라 노출
+ 
+ - 글쓰기 폼 화면 개발(boardReg.jsp)
+  = 유효성 체크는 미작업
+
+ - 게시판 글쓰기 기능 구현
+  = INSERT BOARD_LIST, BOARD_HIERARCHY
+ 
+ - web.xml
+  = 인코딩 필터 추가(서버 한글깨짐 해결)
+  
 </code></pre>
