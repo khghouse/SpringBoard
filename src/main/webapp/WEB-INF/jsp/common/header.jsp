@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/init.jsp" %>
 
 <div class="ui menu">
-	<a class="item" href="/main/index.do">홈</a>
-	<a class="item" href="/board/boardList.do">자유게시판</a>
+	<a class="item" href="<c:url value="/main/index.do" />">홈</a>
+	<a class="item" href="<c:url value="/board/board.do?board_id=notice" />">공지사항</a>
+	<a class="item" href="<c:url value="/board/board.do?board_id=free" />">자유게시판</a>
 	<!-- 
 	<div class="header item"></div>
 	<a class="item">Link</a>

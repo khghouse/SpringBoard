@@ -2,10 +2,63 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="Board">
-	<typeAlias alias="hashMap" type="java.util.HashMap" />
+	<typeAlias alias="paramMap" type="spring.com.collections.ParamMap" />
+	<typeAlias alias="rsMap" type="spring.com.collections.RSMap" />
 	
-	<select id="selectBoardList" parameterClass="hashMap" resultClass="hashMap">
-		SELECT	NO, MASTER_NO, TITLE, CONTENTS, ID, HITS, REG_DATE
-		FROM		BOARD_LIST
+	<!-- 2018-11-13 select 게시판 리스트 조회 -->
+	<select id="selectBoardList" parameterClass="paramMap" resultClass="rsMap">
+		SELECT	A.MASTER_NO, A.USER_REG_YN, B.NO, B.TITLE, B.CONTENTS, B.ID, B.HITS, B.REG_DATE
+		FROM		BOARD_MASTER AS A
+		LEFT JOIN
+			BOARD_LIST AS B
+				ON A.MASTER_NO = B.MASTER_NO
+		WHERE	A.ID = #board_id#
+		AND		A.USE_YN = 'Y'
 	</select>
+	
+	<!-- 2018-11-13 insert 게시글 등록 -->
+	<insert id="insertBoardList" parameterClass="paramMap">
+		INSERT
+		INTO		BOARD_LIST(MASTER_NO, TITLE, CONTENTS, ID, HITS, REG_DATE)
+		SELECT	MASTER_NO, #title#, #contents#, #id#, 0, NOW()
+		FROM		BOARD_MASTER
+		WHERE	ID = #board_id#
+		<selectKey keyProperty="no" resultClass="int">
+			SELECT	@@IDENTITY AS NO
+		</selectKey>
+	</insert>
+	
+	<!-- 2018-11-13 insert 게시글 계층구조 등록 -->
+	<insert id="insertBoardHierarchy" parameterClass="paramMap">
+		INSERT
+		INTO		BOARD_HIERARCHY(NO, GROUP_ID, STEP, SEQ, U_NO)
+		VALUES
+		(
+			#no#
+			<isNotEmpty property="group_id" prepend=",">
+				#group_id#
+			</isNotEmpty>
+			<isEmpty property="group_id" prepend=",">
+				#no#
+			</isEmpty>
+			<isNotEmpty property="step" prepend=",">
+				#step#
+			</isNotEmpty>
+			<isEmpty property="step" prepend=",">
+				0
+			</isEmpty>
+			<isNotEmpty property="seq" prepend=",">
+				#seq#
+			</isNotEmpty>
+			<isEmpty property="seq" prepend=",">
+				1
+			</isEmpty>
+			<isNotEmpty property="u_no" prepend=",">
+				#u_no#
+			</isNotEmpty>
+			<isEmpty property="u_no" prepend=",">
+				0
+			</isEmpty>
+		)
+	</insert>
 </sqlMap>

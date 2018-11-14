@@ -1,11 +1,13 @@
 package spring.board.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Repository;
+
+import spring.com.collections.ParamMap;
+import spring.com.collections.RSMap;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -21,8 +23,20 @@ public class BoardDaoImpl extends SqlMapClientDaoSupport implements BoardDao
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<HashMap<String, String>> selectBoardList(HashMap<String, String> param) throws Exception
+	public List<RSMap> selectBoardList(ParamMap param) throws Exception
 	{
 		return getSqlMapClient().queryForList("Board.selectBoardList", param);
+	}
+
+	@Override
+	public int insertBoardList(ParamMap param) throws Exception
+	{
+		return (Integer) getSqlMapClientTemplate().insert("Board.insertBoardList", param);
+	}
+
+	@Override
+	public int insertBoardHierarchy(ParamMap param) throws Exception
+	{
+		return (Integer) getSqlMapClientTemplate().update("Board.insertBoardHierarchy", param);
 	}
 }

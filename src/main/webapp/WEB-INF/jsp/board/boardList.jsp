@@ -5,6 +5,21 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/jsp/common/head.jsp" %>
+	
+	<script>
+		$(function()
+		{
+			if('${ scriptMessage }'.length > 0)
+			{
+				alert('${ scriptMessage }');
+			}
+			
+			$("#id_btn_reg").click(function()
+			{
+				$("#id_frm_board").submit();
+			});
+		});
+	</script>
 </head>
 
 <body>
@@ -28,14 +43,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<c:forEach items="${ boardList }" var="list">
+				<c:forEach items="${ boardList }" var="list">
+					<tr>
 						<td>${ list.NO }</td>
 						<td class="left aligned" style="cursor:pointer;">${ list.TITLE }</td>
 						<td>${ list.ID }</td>
 						<td>${ list.HITS }</td>
-					</c:forEach>
-				</tr>
+					</tr>
+				</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
@@ -53,6 +68,17 @@
 			</tfoot>
 		</table>
 	</div>
+	
+	<c:if test="${ userRegYn eq 'Y' }">
+		<div class="column" style="margin-top:5px;">
+			<button class="ui blue button" id="id_btn_reg">글 등록</button>
+		</div>
+	</c:if>
 </div>
+
+<form id="id_frm_board" method="post" action='<c:url value="/board/boardForm.do" />'>
+	<input type="hidden" name="board_id" value="${ boardId }" />
+	<input type="hidden" name="mode" value="I" /> <%-- insert form --%>
+</form>
 </body>
 </html>
