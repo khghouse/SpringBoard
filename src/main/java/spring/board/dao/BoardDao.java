@@ -29,4 +29,12 @@ public interface BoardDao
 	 * @throws Exception
 	 */
 	public int insertBoardHierarchy(ParamMap param) throws Exception;
+	
+	/**
+	 * 2018-11-16 게시글 패스워드 등록
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public void insertBoardPwd(ParamMap param) throws Exception;
 }

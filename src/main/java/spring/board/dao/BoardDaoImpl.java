@@ -39,4 +39,10 @@ public class BoardDaoImpl extends SqlMapClientDaoSupport implements BoardDao
 	{
 		return (Integer) getSqlMapClientTemplate().update("Board.insertBoardHierarchy", param);
 	}
+
+	@Override
+	public void insertBoardPwd(ParamMap param) throws Exception
+	{
+		getSqlMapClientTemplate().insert("Board.insertBoardPwd", param);
+	}
 }

@@ -5,18 +5,38 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/jsp/common/head.jsp" %>
+	<script type="text/javascript" src="<c:url value='/docs/js/validation.js' />"></script> 
 	
 	<script>
 		$(function()
 		{
 			$("#id_btn_reg").click(function()
 			{
-				$("#id_frm_board").submit();
+				if(isValidation())
+				{
+					$("#id_frm_board").submit();
+				}
 			});
 		});
 		
 		function isValidation()
 		{
+			if(!checkId($("#id_hid_id")))
+			{
+				return false;
+			}
+			if(!checkPwd($("#id_hid_pwd")))
+			{
+				return false;
+			}
+			if(!checkEmpty($("#id_hid_title"), "제목을"))
+			{
+				return false;
+			}
+			if(!checkEmpty($("#id_txtarea_contents"), "내용을"))
+			{
+				return false;
+			}
 			
 			return true;
 		}
@@ -54,7 +74,7 @@
 					
 					<div class="field" >
 						<label>내 용</label>
-						<textarea style="width:80%;" name="contents" id="id_txtarea_contents" placeholder="내용을 작성해주세요."></textarea>
+						<textarea class="error" style="width:80%;" name="contents" id="id_txtarea_contents" placeholder="내용을 작성해주세요."></textarea>
 					</div>
 				</div>
 			</div>

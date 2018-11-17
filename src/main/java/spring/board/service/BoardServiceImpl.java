@@ -34,6 +34,9 @@ public class BoardServiceImpl implements BoardService
 		param.put("no", no);
 		int resultFlag = boardDao.insertBoardHierarchy(param);
 		
+		// 게시글 패스워드 등록 *** 로그인 기능을 붙인다면 수정 필요 ***
+		boardDao.insertBoardPwd(param);
+		
 		if(resultFlag == 1)
 		{
 			returnMsg = "등록되었습니다.";

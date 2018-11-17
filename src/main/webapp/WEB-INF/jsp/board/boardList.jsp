@@ -14,9 +14,19 @@
 				alert('${ scriptMessage }');
 			}
 			
+			// 등록 폼
 			$("#id_btn_reg").click(function()
 			{
+				$("#id_hid_mode").val("I");
 				$("#id_frm_board").submit();
+			});
+			
+			// 상세화면
+			$("td[name=td_title]").click(function()
+			{
+				$("#id_hid_mode").val("V");
+				$("#id_hid_no").val($(this).data("no"));
+				// $("#id_frm_board").submit();
 			});
 		});
 	</script>
@@ -46,7 +56,7 @@
 				<c:forEach items="${ boardList }" var="list">
 					<tr>
 						<td>${ list.NO }</td>
-						<td class="left aligned" style="cursor:pointer;">${ list.TITLE }</td>
+						<td class="left aligned" name="td_title" data-no="${ list.NO }" style="cursor:pointer;">${ list.TITLE }</td>
 						<td>${ list.ID }</td>
 						<td>${ list.HITS }</td>
 					</tr>
@@ -78,7 +88,9 @@
 
 <form id="id_frm_board" method="post" action='<c:url value="/board/boardForm.do" />'>
 	<input type="hidden" name="board_id" value="${ boardId }" />
-	<input type="hidden" name="mode" value="I" /> <%-- insert form --%>
+	<input type="hidden" name="no" id="id_hid_no" value="" />
+	
+	<input type="hidden" name="mode" id="id_hid_mode" value="" />
 </form>
 </body>
 </html>

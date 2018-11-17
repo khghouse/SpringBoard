@@ -60,13 +60,16 @@ public class BoardController
 		String boardId = StringUtils.defaultIfEmpty(request.getParameter("board_id"), "");
 		String mode = StringUtils.defaultIfEmpty(request.getParameter("mode"), "");
 		
+		ParamMap param = new ParamMap();
+		param.setRequest(request);
+		
 		if(mode.equals("I"))
 		{
 			returnView = "/board/boardReg";
 		}
-		else if(mode.equals("U"))
+		else if(mode.equals("V"))
 		{
-			returnView = "/board/boardMod";
+			returnView = "/board/boardDetail";
 		}
 		
 		model.addAttribute("boardId", boardId);

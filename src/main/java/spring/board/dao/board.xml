@@ -61,4 +61,15 @@
 			</isEmpty>
 		)
 	</insert>
+	
+	<!-- 2018-11-16 insert 게시글 패스워드 입력 -->
+	<insert id="insertBoardPwd" parameterClass="paramMap">
+		INSERT
+		INTO		BOARD_PWD(NO, PWD)
+		VALUES
+		(
+			#no#,
+			#pwd#
+		)
+	</insert>
 </sqlMap>
