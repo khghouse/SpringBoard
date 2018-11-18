@@ -30,6 +30,13 @@ public class BoardServiceImpl implements BoardService
 		// 게시글 등록
 		int no = boardDao.insertBoardList(param);
 		
+		// 답글쓰기일 경우 seq를 구한다.
+		if(((String) param.get("mode")).equals("R"))
+		{
+			int seq = boardDao.selectBoardSeq(param);
+			param.put("seq", seq);
+		}
+		
 		// 게시글 계층구조 등록
 		param.put("no", no);
 		int resultFlag = boardDao.insertBoardHierarchy(param);
@@ -43,5 +50,19 @@ public class BoardServiceImpl implements BoardService
 		}
 		
 		return returnMsg;
+	}
+
+	@Override
+	public RSMap selectBoardDetailProcess(ParamMap param) throws Exception
+	{
+		RSMap boardMap = new RSMap();
+		
+		// 조회수 증가
+		boardDao.updateViewCnt(param);
+		
+		// 게시글 상세 정보
+		boardMap = boardDao.selectBoardDetail(param);
+		
+		return boardMap;
 	}
 }

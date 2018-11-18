@@ -21,7 +21,7 @@
 			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" />
 			<tx:method name="execute*" propagation="REQUIRED" rollback-for="Exception" />
 
-			<tx:method name="*" read-only="true" />
+			<!-- <tx:method name="*" read-only="true" /> -->
 		</tx:attributes>
 	</tx:advice>
 	

@@ -21,4 +21,12 @@ public interface BoardService
 	 * @throws Exception
 	 */
 	public String insertBoardProcess(ParamMap param) throws Exception;
+	
+	/**
+	 * 2018-11-18 게시글 상세보기 프로세스
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public RSMap selectBoardDetailProcess(ParamMap param) throws Exception;
 }

@@ -33,13 +33,23 @@ public class BoardController
 		param.setRequest(request);
 		
 		List<RSMap> boardList = null;
+		RSMap boardMap = null;
 		
-		if(mode.equals("I")) // insert
+		if(mode.equals("I") || mode.equals("R")) // insert(글쓰기, 답글쓰기)
 		{
 			// 게시글 등록 프로세스
 			scriptMessage = boardService.insertBoardProcess(param);
 			mode = "L";
 		}
+		else if(mode.equals("V"))
+		{
+			boardMap = boardService.selectBoardDetailProcess(param);
+			
+			model.addAttribute("boardMap", boardMap);
+			
+			returnView = "/board/boardDetail";
+		}
+		
 		if(mode.equals("L")) // select list
 		{
 			boardList = boardService.selectBoardList(param);
@@ -63,15 +73,13 @@ public class BoardController
 		ParamMap param = new ParamMap();
 		param.setRequest(request);
 		
-		if(mode.equals("I"))
+		// 글쓰기 또는 답글쓰기
+		if(mode.equals("I") || mode.equals("R"))
 		{
 			returnView = "/board/boardReg";
 		}
-		else if(mode.equals("V"))
-		{
-			returnView = "/board/boardDetail";
-		}
 		
+		model.addAttribute("param", param);
 		model.addAttribute("boardId", boardId);
 		
 		return returnView;

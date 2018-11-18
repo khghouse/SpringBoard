@@ -7,13 +7,17 @@
 	
 	<!-- 2018-11-13 select 게시판 리스트 조회 -->
 	<select id="selectBoardList" parameterClass="paramMap" resultClass="rsMap">
-		SELECT	A.MASTER_NO, A.USER_REG_YN, B.NO, B.TITLE, B.CONTENTS, B.ID, B.HITS, B.REG_DATE
+		SELECT	A.MASTER_NO, A.USER_REG_YN, B.NO, B.TITLE, B.CONTENTS, B.ID, B.HITS, B.REG_DATE, C.STEP
 		FROM		BOARD_MASTER AS A
 		LEFT JOIN
 			BOARD_LIST AS B
 				ON A.MASTER_NO = B.MASTER_NO
+		LEFT JOIN
+			BOARD_HIERARCHY AS C
+				ON B.NO = C.NO
 		WHERE	A.ID = #board_id#
 		AND		A.USE_YN = 'Y'
+		ORDER BY C.GROUP_ID DESC, C.U_NO ASC, C.SEQ ASC
 	</select>
 	
 	<!-- 2018-11-13 insert 게시글 등록 -->
@@ -72,4 +76,32 @@
 			#pwd#
 		)
 	</insert>
+	
+	<!-- 2018-11-18 update 게시글 조회수 증가 -->
+	<update id="updateViewCnt" parameterClass="paramMap">
+		UPDATE	BOARD_LIST
+		SET		HITS = HITS + 1
+		WHERE	NO = #no#
+	</update>
+	
+	<!-- 2018-11-18 select 게시글 상세 정보 -->
+	<select id="selectBoardDetail" parameterClass="paramMap" resultClass="rsMap">
+		SELECT	A.MASTER_NO, A.USER_REG_YN, B.NO, B.ID, B.TITLE, B.CONTENTS, B.HITS, DATE_FORMAT(B.REG_DATE, '%Y-%m-%d %H:%i') AS REG_DATE, C.GROUP_ID, C.STEP, C.SEQ, C.U_NO
+		FROM		BOARD_MASTER AS A
+		JOIN
+			BOARD_LIST AS B
+				ON	A.MASTER_NO = B.MASTER_NO
+				AND	B.NO = #no#
+		JOIN
+			BOARD_HIERARCHY AS C
+				ON B.NO = C.NO
+		WHERE	A.USE_YN = 'Y'
+	</select>
+	
+	<!-- 2018-11-18 select 게시글 SEQ 조회 -->
+	<select id="selectBoardSeq" parameterClass="paramMap" resultClass="int">
+		SELECT	MAX(SEQ) + 1 AS SEQ
+		FROM		BOARD_HIERARCHY
+		WHERE	GROUP_ID = #group_id#
+	</select>
 </sqlMap>

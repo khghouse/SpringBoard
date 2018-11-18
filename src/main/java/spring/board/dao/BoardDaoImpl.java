@@ -45,4 +45,22 @@ public class BoardDaoImpl extends SqlMapClientDaoSupport implements BoardDao
 	{
 		getSqlMapClientTemplate().insert("Board.insertBoardPwd", param);
 	}
+
+	@Override
+	public void updateViewCnt(ParamMap param) throws Exception
+	{
+		getSqlMapClientTemplate().update("Board.updateViewCnt", param);
+	}
+
+	@Override
+	public RSMap selectBoardDetail(ParamMap param) throws Exception
+	{
+		return (RSMap) getSqlMapClientTemplate().queryForObject("Board.selectBoardDetail", param);
+	}
+
+	@Override
+	public int selectBoardSeq(ParamMap param) throws Exception
+	{
+		return (Integer) getSqlMapClientTemplate().queryForObject("Board.selectBoardSeq", param);
+	}
 }

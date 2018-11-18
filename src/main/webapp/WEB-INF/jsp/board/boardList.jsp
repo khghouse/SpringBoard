@@ -18,15 +18,15 @@
 			$("#id_btn_reg").click(function()
 			{
 				$("#id_hid_mode").val("I");
-				$("#id_frm_board").submit();
+				$("#id_frm_board_form").submit();
 			});
 			
 			// 상세화면
 			$("td[name=td_title]").click(function()
 			{
-				$("#id_hid_mode").val("V");
-				$("#id_hid_no").val($(this).data("no"));
-				// $("#id_frm_board").submit();
+				$("#id_frm_board #id_hid_mode").val("V");
+				$("#id_frm_board  #id_hid_no").val($(this).data("no"));
+				$("#id_frm_board").submit();
 			});
 		});
 	</script>
@@ -55,8 +55,13 @@
 			<tbody>
 				<c:forEach items="${ boardList }" var="list">
 					<tr>
-						<td>${ list.NO }</td>
-						<td class="left aligned" name="td_title" data-no="${ list.NO }" style="cursor:pointer;">${ list.TITLE }</td>
+						<td>${ list.STEP eq 0 ? list.NO : '' }</td>
+						<td class="left aligned" name="td_title" data-no="${ list.NO }" style="cursor:pointer;">
+							<c:if test="${ list.STEP > 0 }">
+								<c:forEach begin="0" end="${ list.STEP }">&nbsp;&nbsp;</c:forEach>ㄴ&nbsp;
+							</c:if>
+							${ list.TITLE }
+						</td>
 						<td>${ list.ID }</td>
 						<td>${ list.HITS }</td>
 					</tr>
@@ -86,11 +91,18 @@
 	</c:if>
 </div>
 
-<form id="id_frm_board" method="post" action='<c:url value="/board/boardForm.do" />'>
+<form id="id_frm_board_form" method="post" action='<c:url value="/board/boardForm.do" />'>
+	<input type="hidden" name="board_id" value="${ boardId }" />
+	
+	<input type="hidden" name="mode" id="id_hid_mode" value="" />
+</form>
+
+<form id="id_frm_board" method="post" action='<c:url value="/board/board.do" />'>
 	<input type="hidden" name="board_id" value="${ boardId }" />
 	<input type="hidden" name="no" id="id_hid_no" value="" />
 	
 	<input type="hidden" name="mode" id="id_hid_mode" value="" />
 </form>
+
 </body>
 </html>

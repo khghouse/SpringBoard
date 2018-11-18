@@ -49,7 +49,12 @@
 	
 	<form id="id_frm_board" method="post" action="<c:url value="/board/board.do" />">
 		<input type="hidden" name="board_id" value="${ boardId }" />
-		<input type="hidden" name="mode" value="I" />
+		<input type="hidden" name="mode" value="${ param.mode eq '' ? 'I' : param.mode }" />
+		
+		<input type="hidden" name="group_id" value="${ param.group_id }" />
+		<input type="hidden" name="step" value="${ param.step }" />
+		<%-- <input type="hidden" name="seq" value="${ param.seq }" /> --%>
+		<input type="hidden" name="u_no" value="${ param.u_no }" />
 		
 		<div class="ui placeholder segment">
 			<div class="column">

@@ -37,4 +37,27 @@ public interface BoardDao
 	 * @throws Exception
 	 */
 	public void insertBoardPwd(ParamMap param) throws Exception;
+	
+	/**
+	 * 2018-11-18 게시글 조회수 증가
+	 * @param param
+	 * @throws Exception
+	 */
+	public void updateViewCnt(ParamMap param) throws Exception;
+	
+	/**
+	 * 2018-11-18 게시글 상세보기
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public RSMap selectBoardDetail(ParamMap param) throws Exception;
+	
+	/**
+	 * 2018-11-18 게시글 SEQ 조회
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	public int selectBoardSeq(ParamMap param) throws Exception;
 }
